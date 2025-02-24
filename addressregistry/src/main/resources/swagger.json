@@ -1,0 +1,233 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [{
+    "url": "http://localhost:8081",
+    "description": "Generated server url"
+  }
+  ],
+  "paths": {
+    "/updateAddressWithQuery": {
+      "put": {
+        "tags": ["address-controller"],
+        "operationId": "updateAddressWithQuery",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/updateAddressById": {
+      "put": {
+        "tags": ["address-controller"],
+        "operationId": "updateAddressById",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddressDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/createAddress": {
+      "post": {
+        "tags": ["address-controller"],
+        "operationId": "createAddress",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddressDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readAllAddresses": {
+      "get": {
+        "tags": ["address-controller"],
+        "operationId": "readAllAddresses",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AddressDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readAddressListByAddressType/{addressType}": {
+      "get": {
+        "tags": ["address-controller"],
+        "operationId": "readAddressById",
+        "parameters": [{
+          "name": "addressType",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AddressDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readAddressById": {
+      "get": {
+        "tags": ["address-controller"],
+        "operationId": "readAddressById_1",
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddressDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deleteAllAddresses": {
+      "delete": {
+        "tags": ["address-controller"],
+        "operationId": "deleteAllAddresses",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/deleteAddressById/{id}": {
+      "delete": {
+        "tags": ["address-controller"],
+        "operationId": "deleteAddressById",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddressDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "street": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "addressType": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

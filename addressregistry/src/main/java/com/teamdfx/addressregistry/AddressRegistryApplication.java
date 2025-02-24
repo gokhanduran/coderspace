@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
+// @SpringBootApplication, bu sınıfın bir Spring Boot uygulaması olduğunu belirtir ve otomatik yapılandırmaları etkinleştirir.
 @Import({ModelMapperConfig.class})
 @SpringBootApplication
 public class AddressRegistryApplication {

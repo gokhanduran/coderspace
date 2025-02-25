@@ -9,13 +9,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-//@Component ile işaretlenen sınıflar otomatik olarak Spring konteynerine eklenir.
+
 @Component
 public class AddressMapper {
-    /**
-     * ModelMapper, Java nesneleri arasında otomatik dönüşüm sağlamak için kullanılan bir kütüphanedir.
-     * Özellikle DTO (Data Transfer Object) ile Entity dönüşümlerinde kullanılır ve manuel getter-setter çağrılarını azaltarak kodu sadeleştirir.
-     */
+
     private final ModelMapper modelMapper;
 
     public AddressMapper(ModelMapper modelMapper) {
@@ -38,17 +35,6 @@ public class AddressMapper {
         return address;
     }
 
-    /**
-     * Bu ifade, addressList isimli bir listeyi stream kullanarak dolaşır, her öğeyi toDTO metoduna dönüştürür ve sonuçları yeni bir List içinde toplar.
-     *
-     * addressList.stream()
-     *
-     stream() → Listeyi akışa çevirir.
-     map(this::toDTO) → Her Address nesnesini AddressDTO nesnesine dönüştürür.
-     collect(Collectors.toList()) → Dönüştürülen nesneleri liste olarak toplar.
-     *
-     * Dönüştürülen öğeleri bir liste (List) olarak toplar ve döndürür.
-     */
     public List<AddressDTO> toDTOList(List<Address> addressList){
         return addressList.stream().map(this::toDTO).collect(Collectors.toList());
     }

@@ -14,37 +14,10 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
-// @Service, bu sınıfın bir servis bileşeni olduğunu belirtir.
+
 @Service
 public class AddressServiceImpl implements AddressService {
 
-    /**
-     *
-     * @Autowired, Spring Dependency Injection (Bağımlılık Enjeksiyonu) mekanizmasını kullanarak bir sınıfa otomatik olarak bağımlılık enjekte etmek için kullanılır.
-     * Spring, @Autowired annotation’ı sayesinde uygun bean’leri bulur ve enjekte eder, böylece manuel nesne oluşturma (new anahtar kelimesi) ihtiyacını ortadan kaldırır.
-     *
-     * @Autowired, bağımlılıkları otomatik olarak enjekte etmek için kullanılır.
-     * Constructor Injection önerilir çünkü güvenli ve test edilebilir.
-     * Field Injection önerilmez çünkü esneklik ve test edilebilirlik düşer.
-     * Setter Injection isteğe bağlı bağımlılıklar için kullanılabilir.
-     */
-
-    /**
-     // Field Injection (Önerilmez)
-    // Field Injection doğrudan sınıf değişkenlerine bağımlılık enjekte eder, bu da test yazarken mock nesneleri yerleştirmeyi zorlaştırır.
-    // Spring çerçevesine çok bağımlı hale gelir, bağımsız çalışabilirliği zorlaşır.
-
-    @Autowired
-    AddressRepository addressRepository;
-
-    @Autowired
-    AddressMapper addressMapper;**/
-
-    /** Constructor Injection (Önerilen Yöntem)
-     * Daha güvenlidir (bağımlılıklar final olabilir).
-     * Daha okunaklıdır (test edilebilirliği artırır).
-     * @Autowired zorunlu değildir, Spring otomatik olarak constructor’ı kullanır.
-     **/
     private final AddressRepository addressRepository;
     private final AddressMapper addressMapper;
 
@@ -54,20 +27,10 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressDTO createAddress(AddressDTO addressDTO){
-        return addressMapper.toDTO(addressRepository.save(addressMapper.fromDTO(addressDTO)));
-    }
-
-    @Override
     public AddressDTO getAddressById(Long id) {
         AddressDTO addressDTO = addressMapper.toDTO(addressRepository.findById(id));
         addressDTO.setAddressType(decideAddressType(addressDTO.getAddressType()));
         return addressDTO;
-    }
-
-    @Override
-    public List<AddressDTO> getAddressByAddressType(String addressType) {
-        return addressMapper.toDTOList(addressRepository.findByAddressType(addressType)); //TODO: repoyu cagir
     }
 
     private String decideAddressType(String addressType){
@@ -86,11 +49,10 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressDTO updateAddressById(AddressDTO addressDTO) {
-        Address address = addressRepository.findById(addressDTO.getId());
+    public AddressDTO updateAddressById(Long id,AddressDTO addressDTO) {
+        Address address = addressRepository.findById(id);
         address.setAddressType(addressDTO.getAddressType());
         address.setCity(addressDTO.getCity());
-        address.setState(addressDTO.getState());
         address.setStreet(addressDTO.getStreet());
         address.setCountry(addressDTO.getCountry());
         address.setPostalCode(addressDTO.getPostalCode());
@@ -98,11 +60,6 @@ public class AddressServiceImpl implements AddressService {
         return addressDTO;
     }
 
-    /**
-     *
-     *ReflectionUtils: Güncellenecek alanın adını (key) Student sınıfında arar ve varsa değerini (value) günceller.
-     *  addressMapper.toDTO(addressRepository.save(address)) güncellenen değerleri veri tabanına kaydeder.
-     */
     @Override
     public AddressDTO updateAddressPartial(Long id, Map<String, Object> updates) {
         Address address = addressRepository.findById(id);
@@ -118,18 +75,9 @@ public class AddressServiceImpl implements AddressService {
 
 
     @Override
-    public void updateAddressWithQuery(AddressDTO addressDTO) {
-        Address address = addressMapper.fromDTO(addressDTO);
-        addressRepository.updateAddressWithQuery(address.getId(),address.getStreet(),address.getCity(),address.getState(),address.getPostalCode(),address.getCountry(),address.getAddressType());
-    }
-
-    @Override
     public void deleteAddressById(Long id) {
         addressRepository.deleteById(id);
     }
 
-    @Override
-    public void deleteAllAddresses() {
-        addressRepository.deleteAll();
-    }
+
 }

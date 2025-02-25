@@ -15,11 +15,15 @@ import java.util.Map;
 @RestController
 public class AddressController {
 
+    /**
+     * createAddress ve deleteAllAddresses method controlerini yaz
+     */
 
 
     @Autowired
     AddressService addressService;
 
+    //TODO: bu methodu yaz
     // @PostMapping, HTTP POST isteği için kullanılır.
     @PostMapping("/createAddress")
     private ResponseEntity<AddressDTO> createAddress(@RequestBody AddressDTO addressDTO){
@@ -57,7 +61,7 @@ public class AddressController {
     /**
     Bu örnekte, güncellemeler dinamik olarak bir Map<String, Object> olarak alınacak ve ilgili alanlara yansıtılacaktır.
 
-     @PatchMapping("/{id}"): HTTP PATCH isteğini /students/{id} endpoint'ine yönlendirir.
+     @PatchMapping("/{id}"): HTTP PATCH isteğini /updateAddressPartial/{id} endpoint'ine yönlendirir.
      @RequestBody Map<String, Object> updates: İstek gövdesinde gönderilen kısmi güncellemeleri bir Map olarak alır.
      */
     @PatchMapping("/updateAddressPartial/{id}")
@@ -72,6 +76,7 @@ public class AddressController {
         addressService.deleteAddressById(id);
     }
 
+    //TODO: bu methodu yaz
     @DeleteMapping("/deleteAllAddresses")
     private void deleteAllAddresses(){
         addressService.deleteAllAddresses();

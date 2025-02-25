@@ -67,7 +67,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<AddressDTO> getAddressByAddressType(String addressType) {
-        return addressMapper.toDTOList(addressRepository.findByAddressType(addressType));
+        return addressMapper.toDTOList(addressRepository.findByAddressType(addressType)); //TODO: repoyu cagir
     }
 
     private String decideAddressType(String addressType){

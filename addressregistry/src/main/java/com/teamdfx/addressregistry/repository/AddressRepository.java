@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @Transactional, Spring’in işlemsel (transactional) yönetimini sağlamak için kullanılan bir annotation’dır.
  * Bu annotation sayesinde bir metot veya sınıf içindeki tüm işlemler ya tamamen başarılı olur ya da hata durumunda geri alınır (rollback yapılır).
- *
+ *avantajları
  * Veri bütünlüğünü korur: Tüm işlemler ya tam olarak gerçekleştirilir ya da tamamen geri alınır.
  * Bağlantı yönetimini kolaylaştırır: Spring, otomatik olarak veritabanı bağlantılarını açar ve kapatır.
  * Özelleştirilebilir hata yönetimi: Belirli istisnalarda rollback yapılmasını sağlayabiliriz.
@@ -27,7 +27,7 @@ import java.util.List;
 @Transactional
 public interface AddressRepository extends JpaRepository<Address, AddressDTO> {
     Address findById(Long id);
-    List<Address> findByAddressType(String addressType);
+    List<Address> findByAddressType(String addressType); //TODO: bunu yaz
     List<Address> findAll();
 
     @Modifying

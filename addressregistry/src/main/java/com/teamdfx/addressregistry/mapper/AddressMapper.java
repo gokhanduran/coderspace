@@ -38,6 +38,17 @@ public class AddressMapper {
         return address;
     }
 
+    /**
+     * Bu ifade, addressList isimli bir listeyi stream kullanarak dolaşır, her öğeyi toDTO metoduna dönüştürür ve sonuçları yeni bir List içinde toplar.
+     *
+     * addressList.stream()
+     *
+     stream() → Listeyi akışa çevirir.
+     map(this::toDTO) → Her Address nesnesini AddressDTO nesnesine dönüştürür.
+     collect(Collectors.toList()) → Dönüştürülen nesneleri liste olarak toplar.
+     *
+     * Dönüştürülen öğeleri bir liste (List) olarak toplar ve döndürür.
+     */
     public List<AddressDTO> toDTOList(List<Address> addressList){
         return addressList.stream().map(this::toDTO).collect(Collectors.toList());
     }

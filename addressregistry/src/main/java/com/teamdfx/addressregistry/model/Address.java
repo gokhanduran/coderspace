@@ -4,13 +4,21 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+// Getter metodları, bir değişkenin değerini dış dünyaya açar. Örneğin, getStreet() metodu name değişkeninin değerini döndürür.
+// Setter metodları, bir değişkenin değerini dışarıdan değiştirmek için kullanılır. Örneğin, setStreet(String name) metodu name değişkenine yeni bir değer atar.
+//Veri kapsülleme (Encapsulation) sağlanır, doğrudan değişkenlere erişmek yerine kontrollü erişim yapılır.
+//Kodun yönetilebilirliği artar, gerektiğinde değişkenlerin değerini işlerken özel mantık uygulanabilir.
+// @Table annotation'ı, bir JPA (Java Persistence API) varlığının (entity) hangi veritabanı tablosuna karşılık geldiğini belirtmek için kullanılır.
 @Getter
 @Setter
 @Entity
 @Table(name="ADDRESS")
 public class Address {
+    // @Id, bu alanın birincil anahtar olduğunu belirtir.
+    // @GeneratedValue, otomatik olarak artırılan bir ID sağlar.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //Column veri tabanında tabloda bulunan ismi
     @Column(name = "id")
     private Long id;
     @Column(name = "street")

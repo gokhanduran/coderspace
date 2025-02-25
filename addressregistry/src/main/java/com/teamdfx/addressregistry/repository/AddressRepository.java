@@ -11,7 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+// @Repository, bu arayüzün bir veri erişim katmanı bileşeni olduğunu belirtir.
 @Repository
+/**
+ * @Transactional, Spring’in işlemsel (transactional) yönetimini sağlamak için kullanılan bir annotation’dır.
+ * Bu annotation sayesinde bir metot veya sınıf içindeki tüm işlemler ya tamamen başarılı olur ya da hata durumunda geri alınır (rollback yapılır).
+ *
+ * Veri bütünlüğünü korur: Tüm işlemler ya tam olarak gerçekleştirilir ya da tamamen geri alınır.
+ * Bağlantı yönetimini kolaylaştırır: Spring, otomatik olarak veritabanı bağlantılarını açar ve kapatır.
+ * Özelleştirilebilir hata yönetimi: Belirli istisnalarda rollback yapılmasını sağlayabiliriz.
+ *
+ *  Metot seviyesinde veya sınıf seviyesinde kullanılabilir.
+ *  Bir sınıfa @Transactional eklendiğinde, tüm metodlar varsayılan olarak işlemsel hale gelir.
+ */
 @Transactional
 public interface AddressRepository extends JpaRepository<Address, AddressDTO> {
     Address findById(Long id);

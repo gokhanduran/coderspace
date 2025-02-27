@@ -24,18 +24,22 @@ import java.util.List;
  *  Metot seviyesinde veya sınıf seviyesinde kullanılabilir.
  *  Bir sınıfa @Transactional eklendiğinde, tüm metodlar varsayılan olarak işlemsel hale gelir.
  */
-@Transactional
-public interface AddressRepository extends JpaRepository<Address, AddressDTO> {
-    Address findById(Long id);
-    List<Address> findByAddressType(String addressType); //TODO: bunu yaz
-    List<Address> findAll();
 
+// JpaRepository<Address, Long> sol taraftaki objenin pk'nin tipinin sag tarafta göstermesi gerekiyor.
+@Transactional
+public interface AddressRepository extends JpaRepository<Address, Long> {
+
+    List<Address> findByAddressType(String addressType); //TODO: bunu yaz
+
+    // findbyid ya da findall gibi degerleri yazmaya gerek yok.
+
+    // @Modifying: Bu sorgunun veri değiştirdiğini belirtir.
     @Modifying
-    @Query("update Address a set a.street = :street, a.city = :city, a.state = :state , a.postalCode = :postalCode, a.country = :country, a.addressType = :addressType where a.id= :id")
+    //@Query: Özel bir JPQL sorgusu tanımlar
+    @Query("update Address a set a.street = :street, a.city = :city,  a.postalCode = :postalCode, a.country = :country, a.addressType = :addressType where a.id= :id")
     void updateAddressWithQuery(@Param(value = "id") Long id,
                                        @Param(value = "street") String street,
                                        @Param(value = "city") String city,
-                                       @Param(value = "state") String state,
                                        @Param(value = "postalCode") String postalCode,
                                        @Param(value = "country") String country,
                                        @Param(value = "addressType") String addressType);

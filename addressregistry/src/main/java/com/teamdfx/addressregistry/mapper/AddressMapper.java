@@ -10,11 +10,13 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 //@Component ile işaretlenen sınıflar otomatik olarak Spring konteynerine eklenir.
+//@Component, Spring Framework’te bir sınıfın Spring Container tarafından yönetilen bir Bean (bileşen) olmasını sağlar. Yani, Spring bu sınıfı otomatik olarak algılar
+// ve uygulama konteynerine dahil eder.
 @Component
 public class AddressMapper {
+
     /**
-     * ModelMapper, Java nesneleri arasında otomatik dönüşüm sağlamak için kullanılan bir kütüphanedir.
-     * Özellikle DTO (Data Transfer Object) ile Entity dönüşümlerinde kullanılır ve manuel getter-setter çağrılarını azaltarak kodu sadeleştirir.
+     * Model maapperdan ModelMapperConfig sınıfının içinde bahset.
      */
     private final ModelMapper modelMapper;
 

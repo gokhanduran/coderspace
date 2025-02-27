@@ -32,12 +32,40 @@ public class Address {
     private String street;
     @Column(name = "city")
     private String city;
-    @Column(name = "state")
-    private String state;
     @Column(name = "postal_code")
     private String postalCode;
     @Column(name = "country")
     private String country;
     @Column(name = "address_type")
     private String addressType;
+
+    /**
+     * GenerationType.IDENTITY (Otomatik Artan ID - Auto Increment)
+     *
+     * Veritabanının otomatik artan (auto-increment) özelliğini kullanır.
+     * ID, Hibernate veya JPA tarafından değil, veritabanı tarafından oluşturulur.
+     * Genellikle MySQL, PostgreSQL, SQL Server gibi veritabanlarında kullanılır.
+     *
+     *
+     *
+     * GenerationType.SEQUENCE (Veritabanı Sekansı Kullanma)
+     *
+     * Hibernate, ID üretmek için veritabanı sekanslarını kullanır.
+     * Oracle, PostgreSQL gibi veritabanlarında daha performanslıdır.
+     * Veritabanı tablosuna gitmeden önce Hibernate, ID’yi tahmin edebilir.
+     *
+     *
+     *
+     * GenerationType.TABLE (Tablo Kullanarak ID Üretme)
+     *
+     * Hibernate, ID değerlerini saklamak için ayrı bir tablo oluşturur.
+     * Her veritabanında çalışabilir, ancak performans açısından yavaştır.
+     *
+     *
+     *
+     *  GenerationType.AUTO (Hibernate Kendi Seçer)
+     *
+     * Hibernate, kullanılan veritabanına göre en uygun stratejiyi otomatik seçer.
+     * MySQL için IDENTITY, PostgreSQL için SEQUENCE, diğer veritabanları için uygun olanı kullanır.
+     */
 }

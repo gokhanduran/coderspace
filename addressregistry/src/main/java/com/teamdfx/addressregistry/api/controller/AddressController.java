@@ -17,6 +17,11 @@ public class AddressController {
 
     /**
      * createAddress ve deleteAllAddresses method controlerini yaz
+     *
+     * GET—To get a collection or a single resource
+     * POST—To create a new resource
+     * PUT—To update an existing resource
+     * DELETE—To delete a collection or a single resource
      */
 
 
@@ -25,6 +30,7 @@ public class AddressController {
 
     //TODO: bu methodu yaz
     // @PostMapping, HTTP POST isteği için kullanılır.
+    //@RequestBody: HTTP isteğinin gövdesindeki veriyi belirli bir Java nesnesine dönüştürerek method parametresi olarak kullanır.
     @PostMapping("/createAddress")
     private ResponseEntity<AddressDTO> createAddress(@RequestBody AddressDTO addressDTO){
         return new ResponseEntity<>(addressService.createAddress(addressDTO), HttpStatus.CREATED);
@@ -36,6 +42,8 @@ public class AddressController {
         return new ResponseEntity<>(addressService.getAddressById(id),HttpStatus.OK);
     }
 
+    //TODO: bu methodu yaz
+    // @PathVariable: URL'deki değişken değerleri method parametresi olarak alır.
     @GetMapping("/getAddressByAddressType/{addressType}")
     private ResponseEntity<List<AddressDTO>> getAddressByAddressType(@PathVariable String addressType){
         return new ResponseEntity<>(addressService.getAddressByAddressType(addressType),HttpStatus.OK);
@@ -48,11 +56,12 @@ public class AddressController {
     }
 
     // @GetMapping, HTTP PUT isteği için kullanılır.
-    @PutMapping("/updateAddressById")
-    private ResponseEntity<AddressDTO> updateAddressById(@RequestBody AddressDTO addressDTO){
-        return new ResponseEntity<>(addressService.updateAddressById(addressDTO),HttpStatus.OK);
+    @PutMapping("/updateAddressById/{id}")
+    private ResponseEntity<AddressDTO> updateAddressById(@PathVariable Long id, @RequestBody AddressDTO addressDTO){
+        return new ResponseEntity<>(addressService.updateAddressById(id,addressDTO),HttpStatus.OK);
     }
 
+    //TODO: bu methodu yaz
     @PutMapping("/updateAddressWithQuery")
     private void updateAddressWithQuery(@RequestBody AddressDTO addressDTO){
         addressService.updateAddressWithQuery(addressDTO);

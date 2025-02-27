@@ -19,6 +19,10 @@ public class AddressController {
     @Autowired
     AddressService addressService;
 
+    @PostMapping("/createAddress")
+    private ResponseEntity<AddressDTO> createAddress(@RequestBody AddressDTO addressDTO){
+        return new ResponseEntity<>(addressService.createAddress(addressDTO), HttpStatus.CREATED);
+    }
 
     @GetMapping("/getAddressById")
     private ResponseEntity<AddressDTO> getAddressById(@RequestParam Long id){

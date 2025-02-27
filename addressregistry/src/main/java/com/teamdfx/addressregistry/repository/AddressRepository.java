@@ -1,6 +1,5 @@
 package com.teamdfx.addressregistry.repository;
 
-import com.teamdfx.addressregistry.dto.AddressDTO;
 import com.teamdfx.addressregistry.model.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,14 +9,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 @Transactional
-public interface AddressRepository extends JpaRepository<Address, AddressDTO> {
+public interface AddressRepository extends JpaRepository<Address,Long> {
 
-    Address findById(Long id);
-    List<Address> findAll();
 
     @Modifying
     @Query("update Address a set a.street = :street, a.city = :city, a.postalCode = :postalCode, a.country = :country, a.addressType = :addressType where a.id= :id")
@@ -29,5 +27,6 @@ public interface AddressRepository extends JpaRepository<Address, AddressDTO> {
                                        @Param(value = "addressType") String addressType);
 
     void deleteById(Long id);
+
 
 }

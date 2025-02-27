@@ -6,6 +6,7 @@ import com.teamdfx.addressregistry.model.Address;
 import com.teamdfx.addressregistry.repository.AddressRepository;
 import com.teamdfx.addressregistry.service.AddressService;
 import com.teamdfx.addressregistry.util.Constants;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
@@ -13,9 +14,11 @@ import org.springframework.util.ReflectionUtils;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Service
+//@RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService {
 
     private final AddressRepository addressRepository;
@@ -27,8 +30,14 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    public AddressDTO createAddress(AddressDTO addressDTO) {
+       return addressMapper.toDTO(addressRepository.save(addressMapper.fromDTO(addressDTO)));
+
+    }
+
+    @Override
     public AddressDTO getAddressById(Long id) {
-        AddressDTO addressDTO = addressMapper.toDTO(addressRepository.findById(id));
+        AddressDTO addressDTO = addressMapper.toDTO(addressRepository.getReferenceById(id));
         addressDTO.setAddressType(decideAddressType(addressDTO.getAddressType()));
         return addressDTO;
     }
@@ -45,32 +54,41 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<AddressDTO> getAllAddresses() {
+
         return addressMapper.toDTOList(addressRepository.findAll());
     }
 
     @Override
     public AddressDTO updateAddressById(Long id,AddressDTO addressDTO) {
-        Address address = addressRepository.findById(id);
-        address.setAddressType(addressDTO.getAddressType());
-        address.setCity(addressDTO.getCity());
-        address.setStreet(addressDTO.getStreet());
-        address.setCountry(addressDTO.getCountry());
-        address.setPostalCode(addressDTO.getPostalCode());
-        addressDTO = addressMapper.toDTO(addressRepository.save(address));
+        Optional<Address> addressOptional = addressRepository.findById(id);
+        if(addressOptional.isPresent()){
+            Address address = addressOptional.get();
+            address.setAddressType(addressDTO.getAddressType());
+            address.setCity(addressDTO.getCity());
+            address.setStreet(addressDTO.getStreet());
+            address.setCountry(addressDTO.getCountry());
+            address.setPostalCode(addressDTO.getPostalCode());
+            addressDTO = addressMapper.toDTO(addressRepository.save(address));
+        }
         return addressDTO;
     }
 
     @Override
     public AddressDTO updateAddressPartial(Long id, Map<String, Object> updates) {
-        Address address = addressRepository.findById(id);
-        updates.forEach((key, value) -> {
-            Field field = ReflectionUtils.findField(Address.class,key);
-            if(field != null) {
-                field.setAccessible(true);
-                ReflectionUtils.setField(field,address,value);
-            }
-        });
-        return addressMapper.toDTO(addressRepository.save(address));
+        Optional<Address> addressOptional = addressRepository.findById(id);
+        if(addressOptional.isPresent()){
+            Address address = addressOptional.get();
+            updates.forEach((key, value) -> {
+                Field field = ReflectionUtils.findField(Address.class,key);
+                if(field != null) {
+                    field.setAccessible(true);
+                    ReflectionUtils.setField(field,address,value);
+                }
+            });
+            return addressMapper.toDTO(addressRepository.save(address));
+        } else {
+            throw new RuntimeException("Address not found with id " + id);
+        }
     }
 
 
